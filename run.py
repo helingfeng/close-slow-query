@@ -3,6 +3,7 @@ import os
 import configparser
 import time
 import json
+import pymysql
 
 # 读取配置文件
 script_path = os.path.split(os.path.realpath(__file__))[0] + '/config.ini'
@@ -21,14 +22,6 @@ try:
 except:
     print("config.ini ERROR: section [server]")
     exit()
-
-print("[mysql config] MySQLdb://%s:%s@%s %ss" % (
-    config['user'], config['password'], config['host'], config['port']))
-
-try:
-    import pymysql
-except ImportError:
-    raise ImportError('\n\nMySQLdb not installed, exit\n\nyum install MySQL-python\npip install mysql-python')
 
 print("running...")
 
