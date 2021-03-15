@@ -43,7 +43,7 @@ FROM `information_schema`.`PROCESSLIST`
 WHERE (
 `DB`!='information_schema' and `STATE`!='' and `STATE`!='Waiting for INSERT' and `STATE`!='Locked'
 )
-and  `TIME` > %s 
+and  `TIME` >= %s 
 ''' % execute_time
 
 cursor = db.cursor()
@@ -51,3 +51,4 @@ cursor.execute(sql)
 
 for row in cursor.fetchall():
     print(row)
+    cursor.execute("kill %s" % row[0])
