@@ -4,4 +4,5 @@ port=3306
 user=root
 password=123456
 execute_time=60
+kill_log=./log/slow.log
 

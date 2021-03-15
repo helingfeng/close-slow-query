@@ -1,6 +1,8 @@
 import sys
 import os
 import configparser
+import time
+import json
 
 # 读取配置文件
 script_path = os.path.split(os.path.realpath(__file__))[0] + '/config.ini'
@@ -15,6 +17,7 @@ try:
     config['user'] = cp.get('server', 'user')
     config['password'] = cp.get('server', 'password')
     config['execute_time'] = cp.get('server', 'execute_time')
+    config['kill_log'] = cp.get('server', 'kill_log')
 except:
     print("config.ini ERROR: section [server]")
     exit()
@@ -47,8 +50,15 @@ and  `TIME` >= %s
 ''' % execute_time
 
 cursor = db.cursor()
-cursor.execute(sql)
 
-for row in cursor.fetchall():
-    print(row)
-    cursor.execute("kill %s" % row[0])
+while True:
+    cursor.execute(sql)
+
+    for row in cursor.fetchall():
+        with open(config['kill_log'], 'a+') as f:
+            f.write(json.dumps(row))
+        print(row)
+        cursor.execute("kill %s" % row[0])
+
+    print('sleep 5s...')
+    time.sleep(5)
