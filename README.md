@@ -3,7 +3,7 @@
 ## quick start
 
 ```shell
-git clone git@github.com:helingfeng/kill-slow-query.git
+git clone git@github.com:helingfeng/close-slow-query.git
 
 cp config.ini.example config.ini
 
