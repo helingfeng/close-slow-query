@@ -47,14 +47,12 @@ and  `TIME` >= %s
 
 cursor = db.cursor()
 
-while True:
-    cursor.execute(sql)
+cursor.execute(sql)
 
-    for row in cursor.fetchall():
-        with open(config['kill_log'], 'a+') as f:
-            f.write(json.dumps(row))
-        print(row)
-        cursor.execute("kill %s" % row[0])
+for row in cursor.fetchall():
+    with open(config['kill_log'], 'a+') as f:
+        f.write(json.dumps(row))
+    print(row)
+    cursor.execute("kill %s" % row[0])
 
-    print('sleep 5s...')
-    time.sleep(5)
+print('Inspection Completed.')
